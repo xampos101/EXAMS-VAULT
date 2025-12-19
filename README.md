@@ -165,20 +165,42 @@ EXAMS-VAULT/
 
 ## ☁️ Production Deployment
 
-Για production deployment, ρυθμίστε το `USE_S3=True` στο `.env` και προσθέστε:
+### 🚀 Γρήγορο Deploy
 
-```env
-AWS_ACCESS_KEY_ID=your-access-key
-AWS_SECRET_ACCESS_KEY=your-secret-key
-AWS_STORAGE_BUCKET_NAME=your-bucket-name
-AWS_S3_REGION_NAME=eu-central-1
-```
+Για να κάνετε deploy το application online (demo/production), ακολουθήστε τις οδηγίες στο **[DEPLOYMENT.md](DEPLOYMENT.md)**.
 
-Επίσης, βεβαιωθείτε ότι:
-- Το `DEBUG=False` στο production
-- Έχετε ρυθμίσει σωστά τα `ALLOWED_HOSTS` στο `settings.py`
-- Χρησιμοποιείτε HTTPS
-- Έχετε backup της βάσης δεδομένων
+**Συνιστώμενες πλατφόρμες:**
+- **Render.com** (δωρεάν, εύκολο) - [Οδηγίες](DEPLOYMENT.md#-rendercom-συνιστώμενη-λύση)
+- **Railway.app** (δωρεάν credit) - [Οδηγίες](DEPLOYMENT.md#-alternative-railwayapp)
+
+### 📋 Production Checklist
+
+Για production deployment:
+
+1. **Environment Variables**:
+   ```env
+   SECRET_KEY=your-super-secret-key
+   DEBUG=False
+   USE_S3=True  # Για static/media files
+   ```
+
+2. **AWS S3 Configuration** (για file storage):
+   ```env
+   AWS_ACCESS_KEY_ID=your-access-key
+   AWS_SECRET_ACCESS_KEY=your-secret-key
+   AWS_STORAGE_BUCKET_NAME=your-bucket-name
+   AWS_S3_REGION_NAME=eu-central-1
+   ```
+
+3. **Security Settings**:
+   - `DEBUG=False`
+   - Ρυθμίστε `ALLOWED_HOSTS` στο `settings.py`
+   - Χρησιμοποιείτε HTTPS
+   - Ρυθμίστε backup για τη βάση δεδομένων
+
+4. **Static Files**:
+   - Εκτελέστε `python manage.py collectstatic`
+   - Χρησιμοποιήστε CDN ή S3 για static files
 
 ## 🛠️ Ανάπτυξη
 

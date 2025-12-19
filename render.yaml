@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: exam-vault
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn exam_vault.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: False
+      - key: DB_NAME
+        fromDatabase:
+          name: exam-vault-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: exam-vault-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: exam-vault-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: exam-vault-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: exam-vault-db
+          property: port
+      - key: USE_S3
+        value: False
+
+databases:
+  - name: exam-vault-db
+    plan: free
+    databaseName: exam_vault
+    user: exam_vault_user
+
+
